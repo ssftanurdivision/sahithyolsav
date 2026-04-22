@@ -1,0 +1,1822 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tanur Division Sahityotsav '26</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Noto+Sans+Malayalam:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9961A;
+    --gold-light: #F0C050;
+    --gold-pale: #FFF3C4;
+    --dark: #1A1200;
+    --dark2: #2C1E00;
+    --dark3: #3D2C00;
+    --text: #F5E6C0;
+    --text-dim: #B09050;
+    --accent: #E8B020;
+    --red: #C0392B;
+    --green: #27AE60;
+    --blue: #2980B9;
+    --white: #FFFDF5;
+    --card-bg: rgba(44, 30, 0, 0.85);
+    --border: rgba(201, 150, 26, 0.3);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'Noto Sans Malayalam', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ─── BG TEXTURE ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 20%, rgba(201,150,26,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 80%, rgba(201,150,26,0.05) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: rgba(26, 18, 0, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+  }
+
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .nav-logo {
+    width: 36px; height: 36px;
+    background: var(--gold);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+  }
+
+  .nav-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--gold-light);
+    line-height: 1.1;
+  }
+
+  .nav-title small {
+    display: block;
+    font-family: 'Noto Sans Malayalam', sans-serif;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    font-weight: 400;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 0.25rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 0.8rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: 6px;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active {
+    color: var(--gold-light);
+    background: rgba(201,150,26,0.15);
+  }
+
+  .nav-admin-btn {
+    background: var(--gold);
+    color: var(--dark) !important;
+    font-weight: 700 !important;
+    border-radius: 8px !important;
+  }
+
+  .nav-admin-btn:hover {
+    background: var(--gold-light) !important;
+    color: var(--dark) !important;
+  }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  .hamburger span {
+    width: 22px; height: 2px;
+    background: var(--gold);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+
+  /* ─── SECTIONS ─── */
+  .section { display: none; padding-top: 60px; }
+  .section.active { display: block; }
+
+  /* ─── HERO ─── */
+  #home {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    padding: 80px 1.5rem 2rem;
+  }
+
+  .hero-leaves {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .leaf {
+    position: absolute;
+    opacity: 0.06;
+    font-size: 8rem;
+    animation: floatLeaf 8s ease-in-out infinite;
+  }
+
+  .leaf:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
+  .leaf:nth-child(2) { top: 20%; right: 8%; animation-delay: 2s; font-size: 5rem; }
+  .leaf:nth-child(3) { bottom: 20%; left: 10%; animation-delay: 4s; font-size: 6rem; }
+  .leaf:nth-child(4) { bottom: 15%; right: 5%; animation-delay: 1s; font-size: 10rem; }
+
+  @keyframes floatLeaf {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(5deg); }
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(201,150,26,0.15);
+    border: 1px solid var(--border);
+    color: var(--gold-light);
+    font-size: 0.75rem;
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.05em;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.5); }
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--gold-light) 0%, var(--accent) 50%, var(--gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-subtitle {
+    font-family: 'Noto Sans Malayalam', sans-serif;
+    font-size: clamp(1rem, 3vw, 1.4rem);
+    color: var(--text-dim);
+    margin-bottom: 2rem;
+    font-weight: 600;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .stat-box {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    text-align: center;
+    backdrop-filter: blur(8px);
+  }
+
+  .stat-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--gold-light);
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--dark);
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Noto Sans Malayalam', sans-serif;
+  }
+
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(201,150,26,0.3);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--gold-light);
+    border: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Noto Sans Malayalam', sans-serif;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--gold);
+    background: rgba(201,150,26,0.1);
+  }
+
+  /* ─── SECTORS GRID (home) ─── */
+  .sectors-home {
+    padding: 3rem 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .section-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--gold-light);
+    margin-bottom: 0.25rem;
+  }
+
+  .section-sub {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    margin-bottom: 1.5rem;
+  }
+
+  .sectors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .sector-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sector-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    transform: scaleX(0);
+    transition: transform 0.3s;
+  }
+
+  .sector-card:hover::before { transform: scaleX(1); }
+
+  .sector-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+  }
+
+  .sector-name {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--gold-light);
+    margin-bottom: 0.5rem;
+  }
+
+  .sector-units {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .sector-points {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-top: 0.75rem;
+  }
+
+  /* ─── SCOREBOARD PAGE ─── */
+  #scoreboard {
+    min-height: 100vh;
+    padding: 80px 1.5rem 2rem;
+  }
+
+  .page-header {
+    max-width: 1000px;
+    margin: 0 auto 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .live-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--green);
+    background: rgba(39,174,96,0.1);
+    border: 1px solid rgba(39,174,96,0.3);
+    padding: 0.4rem 0.75rem;
+    border-radius: 100px;
+  }
+
+  .live-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    animation: pulse 2s infinite;
+  }
+
+  .filter-tabs {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    max-width: 1000px;
+    margin: 0 auto 1.5rem;
+  }
+
+  .filter-tab {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 0.4rem 0.9rem;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Noto Sans Malayalam', sans-serif;
+  }
+
+  .filter-tab.active,
+  .filter-tab:hover {
+    background: rgba(201,150,26,0.15);
+    border-color: var(--gold);
+    color: var(--gold-light);
+  }
+
+  .scoreboard-table {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    backdrop-filter: blur(8px);
+  }
+
+  .table-head {
+    background: rgba(201,150,26,0.1);
+    display: grid;
+    grid-template-columns: 60px 1fr 80px 80px 80px 80px;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .table-row {
+    display: grid;
+    grid-template-columns: 60px 1fr 80px 80px 80px 80px;
+    padding: 1rem 1.25rem;
+    align-items: center;
+    border-bottom: 1px solid rgba(201,150,26,0.1);
+    transition: background 0.2s;
+    cursor: pointer;
+  }
+
+  .table-row:last-child { border-bottom: none; }
+  .table-row:hover { background: rgba(201,150,26,0.05); }
+
+  .table-row.rank-1 { background: rgba(201,150,26,0.12); }
+  .table-row.rank-2 { background: rgba(192,192,192,0.06); }
+  .table-row.rank-3 { background: rgba(205,127,50,0.06); }
+
+  .rank-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .rank-1 .rank-badge { color: #FFD700; }
+  .rank-2 .rank-badge { color: #C0C0C0; }
+  .rank-3 .rank-badge { color: #CD7F32; }
+
+  .team-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text);
+  }
+
+  .team-units {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    margin-top: 0.15rem;
+  }
+
+  .pts {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-align: center;
+    color: var(--gold-light);
+  }
+
+  .pts-small {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    text-align: center;
+    color: var(--text-dim);
+  }
+
+  /* ─── RESULTS PAGE ─── */
+  #results {
+    min-height: 100vh;
+    padding: 80px 1.5rem 2rem;
+  }
+
+  .results-filter {
+    max-width: 900px;
+    margin: 0 auto 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+  }
+
+  .select-field {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.65rem 1rem;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-family: 'Noto Sans Malayalam', sans-serif;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .select-field:focus { border-color: var(--gold); }
+  .select-field option { background: var(--dark2); }
+
+  .results-grid {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .result-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 1rem;
+    transition: all 0.2s;
+  }
+
+  .result-card:hover { border-color: var(--gold); }
+
+  .result-event {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-bottom: 0.25rem;
+  }
+
+  .result-winner {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--gold-light);
+  }
+
+  .result-unit {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+
+  .result-grade {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    text-align: center;
+  }
+
+  .grade-aplus { background: rgba(255,215,0,0.2); color: #FFD700; }
+  .grade-a { background: rgba(39,174,96,0.2); color: #27AE60; }
+  .grade-b { background: rgba(41,128,185,0.2); color: #2980B9; }
+  .grade-c { background: rgba(189,195,199,0.2); color: #BDC3C7; }
+
+  .no-results {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-dim);
+    font-size: 0.9rem;
+  }
+
+  /* ─── TEAMS PAGE ─── */
+  #teams {
+    min-height: 100vh;
+    padding: 80px 1.5rem 2rem;
+  }
+
+  .teams-grid {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .team-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  .team-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+  }
+
+  .team-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .team-icon {
+    width: 44px; height: 44px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: var(--dark);
+    font-weight: 900;
+    font-family: 'Playfair Display', serif;
+  }
+
+  .team-rank {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    background: rgba(201,150,26,0.1);
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+  }
+
+  .team-card-name {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--gold-light);
+    margin-bottom: 0.25rem;
+  }
+
+  .team-meta {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-bottom: 1rem;
+  }
+
+  .team-stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+
+  .mini-stat {
+    background: rgba(201,150,26,0.08);
+    border-radius: 8px;
+    padding: 0.5rem;
+    text-align: center;
+  }
+
+  .mini-stat-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--accent);
+    display: block;
+  }
+
+  .mini-stat-label {
+    font-size: 0.6rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* ─── ADMIN PAGE ─── */
+  #admin {
+    min-height: 100vh;
+    padding: 80px 1.5rem 2rem;
+  }
+
+  .admin-lock {
+    max-width: 400px;
+    margin: 4rem auto;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    text-align: center;
+    backdrop-filter: blur(8px);
+  }
+
+  .lock-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .admin-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--gold-light);
+    margin-bottom: 0.5rem;
+  }
+
+  .admin-desc {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    margin-bottom: 1.5rem;
+  }
+
+  .input-field {
+    width: 100%;
+    background: rgba(201,150,26,0.08);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-family: 'Noto Sans Malayalam', sans-serif;
+    outline: none;
+    margin-bottom: 1rem;
+    transition: border-color 0.2s;
+    text-align: center;
+    letter-spacing: 0.3em;
+  }
+
+  .input-field:focus { border-color: var(--gold); }
+
+  .error-msg {
+    color: var(--red);
+    font-size: 0.8rem;
+    margin-bottom: 0.75rem;
+    display: none;
+  }
+
+  .admin-panel {
+    max-width: 900px;
+    margin: 0 auto;
+    display: none;
+  }
+
+  .admin-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .admin-tab {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Noto Sans Malayalam', sans-serif;
+  }
+
+  .admin-tab.active {
+    background: var(--gold);
+    color: var(--dark);
+    border-color: var(--gold);
+    font-weight: 700;
+  }
+
+  .admin-content { display: none; }
+  .admin-content.active { display: block; }
+
+  .form-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .form-title {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--gold-light);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.4rem;
+  }
+
+  .form-input {
+    width: 100%;
+    background: rgba(201,150,26,0.08);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.6rem 0.9rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-family: 'Noto Sans Malayalam', sans-serif;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .form-input:focus { border-color: var(--gold); }
+  .form-input option { background: var(--dark2); }
+
+  .btn-save {
+    background: var(--gold);
+    color: var(--dark);
+    border: none;
+    padding: 0.65rem 1.5rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Noto Sans Malayalam', sans-serif;
+  }
+
+  .btn-save:hover {
+    background: var(--gold-light);
+    transform: translateY(-1px);
+  }
+
+  .btn-danger {
+    background: rgba(192,57,43,0.2);
+    color: #E74C3C;
+    border: 1px solid rgba(192,57,43,0.4);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    font-family: 'Noto Sans Malayalam', sans-serif;
+    transition: all 0.2s;
+  }
+
+  .btn-danger:hover { background: rgba(192,57,43,0.35); }
+
+  .results-list {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .result-item {
+    background: rgba(201,150,26,0.06);
+    border: 1px solid rgba(201,150,26,0.15);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .result-item-info {
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .result-item-event {
+    font-size: 0.72rem;
+    color: var(--text-dim);
+  }
+
+  .result-item-winner {
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: var(--text);
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--dark2);
+    border: 1px solid var(--gold);
+    color: var(--gold-light);
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    z-index: 9999;
+    transition: transform 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* ─── SCHEDULE PAGE ─── */
+  #schedule {
+    min-height: 100vh;
+    padding: 80px 1.5rem 2rem;
+  }
+
+  .schedule-grid {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .schedule-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .schedule-header {
+    background: rgba(201,150,26,0.15);
+    padding: 0.75rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .schedule-date {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--gold-light);
+  }
+
+  .schedule-venue {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    background: rgba(201,150,26,0.1);
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+  }
+
+  .schedule-items {
+    padding: 0.75rem 1.25rem;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .schedule-item {
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(201,150,26,0.08);
+    font-size: 0.82rem;
+  }
+
+  .schedule-item:last-child { border-bottom: none; }
+
+  .sch-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--gold);
+  }
+
+  .sch-event { color: var(--text); }
+
+  .sch-cat {
+    font-size: 0.68rem;
+    color: var(--text-dim);
+    background: rgba(201,150,26,0.1);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    text-align: center;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--dark2);
+    border-top: 1px solid var(--border);
+    padding: 2rem 1.5rem;
+    text-align: center;
+    margin-top: 3rem;
+  }
+
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--gold-light);
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-text {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* ─── MOBILE ─── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .nav-links.open {
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 60px; left: 0; right: 0;
+      background: var(--dark2);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem;
+      gap: 0.25rem;
+      z-index: 999;
+    }
+
+    .table-head,
+    .table-row {
+      grid-template-columns: 50px 1fr 70px 70px;
+    }
+
+    .hide-mobile { display: none; }
+
+    .results-filter { grid-template-columns: 1fr 1fr; }
+    .form-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 0.75rem; }
+    .stat-box { padding: 0.75rem 1rem; }
+  }
+
+  @media (max-width: 480px) {
+    .table-head, .table-row {
+      grid-template-columns: 40px 1fr 60px;
+    }
+    .results-filter { grid-template-columns: 1fr; }
+    .teams-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-logo">🍂</div>
+    <div class="nav-title">
+      Sahityotsav '26
+      <small>Tanur Division</small>
+    </div>
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a onclick="showSection('home')" class="active">Home</a></li>
+    <li><a onclick="showSection('scoreboard')">Scoreboard</a></li>
+    <li><a onclick="showSection('results')">Results</a></li>
+    <li><a onclick="showSection('teams')">Teams</a></li>
+    <li><a onclick="showSection('schedule')">Schedule</a></li>
+    <li><a onclick="showSection('admin')" class="nav-admin-btn">Admin</a></li>
+  </ul>
+  <div class="hamburger" onclick="toggleNav()" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ─── HOME ─── -->
+<section class="section active" id="home">
+  <div class="hero-leaves">
+    <div class="leaf">🍂</div>
+    <div class="leaf">🍁</div>
+    <div class="leaf">🍂</div>
+    <div class="leaf">🍁</div>
+  </div>
+
+  <div class="hero-badge">🟢 Live • SSF Tanur Division</div>
+  <h1 class="hero-title">സാഹിത്യോത്സവ് '26</h1>
+  <p class="hero-subtitle">Tanur Division Cultural Festival</p>
+
+  <div class="hero-stats">
+    <div class="stat-box">
+      <span class="stat-num">9</span>
+      <span class="stat-label">Sectors</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num">67</span>
+      <span class="stat-label">Units</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num" id="totalEvents">170+</span>
+      <span class="stat-label">Events</span>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num" id="totalResults">0</span>
+      <span class="stat-label">Results</span>
+    </div>
+  </div>
+
+  <div class="hero-btns">
+    <button class="btn-primary" onclick="showSection('scoreboard')">📊 Live Scoreboard</button>
+    <button class="btn-outline" onclick="showSection('results')">🏆 Results</button>
+  </div>
+
+  <div class="sectors-home">
+    <h2 class="section-heading">Sectors</h2>
+    <p class="section-sub">Tanur Division-ലെ 9 Sectors</p>
+    <div class="sectors-grid" id="homeSectorsGrid"></div>
+  </div>
+</section>
+
+<!-- ─── SCOREBOARD ─── -->
+<section class="section" id="scoreboard">
+  <div class="page-header">
+    <div>
+      <h2 class="section-heading">Live Scoreboard</h2>
+      <p class="section-sub">Sector-wise standings</p>
+    </div>
+    <div class="live-indicator">
+      <div class="live-dot"></div>
+      Live
+    </div>
+  </div>
+
+  <div class="filter-tabs" id="scoreFilterTabs">
+    <button class="filter-tab active" onclick="filterScores('overall', this)">Overall</button>
+    <button class="filter-tab" onclick="filterScores('LP', this)">LP</button>
+    <button class="filter-tab" onclick="filterScores('UP', this)">UP</button>
+    <button class="filter-tab" onclick="filterScores('HS', this)">HS</button>
+    <button class="filter-tab" onclick="filterScores('HSS', this)">HSS</button>
+    <button class="filter-tab" onclick="filterScores('JR', this)">Junior</button>
+    <button class="filter-tab" onclick="filterScores('SR', this)">Senior</button>
+    <button class="filter-tab" onclick="filterScores('Campus', this)">Campus</button>
+    <button class="filter-tab" onclick="filterScores('General', this)">General</button>
+  </div>
+
+  <div class="scoreboard-table">
+    <div class="table-head">
+      <div>Rank</div>
+      <div>Sector</div>
+      <div class="hide-mobile">1st</div>
+      <div class="hide-mobile">2nd</div>
+      <div class="hide-mobile">3rd</div>
+      <div>Points</div>
+    </div>
+    <div id="scoreboardBody"></div>
+  </div>
+</section>
+
+<!-- ─── RESULTS ─── -->
+<section class="section" id="results">
+  <div class="page-header">
+    <div>
+      <h2 class="section-heading">Results</h2>
+      <p class="section-sub">All competition results</p>
+    </div>
+  </div>
+
+  <div class="results-filter">
+    <select class="select-field" id="filterCategory" onchange="filterResults()">
+      <option value="">All Categories</option>
+      <option value="LP">Lower Primary (LP)</option>
+      <option value="UP">Upper Primary (UP)</option>
+      <option value="HS">High School (HS)</option>
+      <option value="HSS">Higher Secondary (HSS)</option>
+      <option value="JR">Junior</option>
+      <option value="SR">Senior</option>
+      <option value="Campus">Campus</option>
+      <option value="General">General</option>
+    </select>
+
+    <select class="select-field" id="filterSector" onchange="filterResults()">
+      <option value="">All Sectors</option>
+    </select>
+
+    <select class="select-field" id="filterGrade" onchange="filterResults()">
+      <option value="">All Grades</option>
+      <option value="A+">A+</option>
+      <option value="A">A</option>
+      <option value="B">B</option>
+      <option value="C">C</option>
+    </select>
+
+    <input class="form-input" id="searchResults" placeholder="🔍 Search event/winner..." oninput="filterResults()" style="background:var(--card-bg);">
+  </div>
+
+  <div class="results-grid" id="resultsGrid">
+    <div class="no-results">Results publish ആകുമ്പോൾ ഇവിടെ കാണാം</div>
+  </div>
+</section>
+
+<!-- ─── TEAMS ─── -->
+<section class="section" id="teams">
+  <div class="page-header">
+    <div>
+      <h2 class="section-heading">Teams</h2>
+      <p class="section-sub">9 Sectors · 67 Units</p>
+    </div>
+  </div>
+  <div class="teams-grid" id="teamsGrid"></div>
+</section>
+
+<!-- ─── SCHEDULE ─── -->
+<section class="section" id="schedule">
+  <div class="page-header">
+    <div>
+      <h2 class="section-heading">Schedule</h2>
+      <p class="section-sub">Event timetable</p>
+    </div>
+  </div>
+  <div class="schedule-grid" id="scheduleGrid"></div>
+</section>
+
+<!-- ─── ADMIN ─── -->
+<section class="section" id="admin">
+  <!-- Lock Screen -->
+  <div class="admin-lock" id="adminLock">
+    <div class="lock-icon">🔐</div>
+    <h2 class="admin-title">Admin Panel</h2>
+    <p class="admin-desc">Division Coordinator PIN നൽകുക</p>
+    <input type="password" class="input-field" id="pinInput" placeholder="• • • • •" maxlength="5" onkeyup="if(event.key==='Enter')checkPin()">
+    <div class="error-msg" id="pinError">❌ Wrong PIN. Try again.</div>
+    <button class="btn-primary" onclick="checkPin()" style="width:100%">Login</button>
+  </div>
+
+  <!-- Admin Panel -->
+  <div class="admin-panel" id="adminPanel">
+    <div class="page-header">
+      <div>
+        <h2 class="section-heading">⚙️ Admin Panel</h2>
+        <p class="section-sub">Results manage ചെയ്യുക</p>
+      </div>
+      <button class="btn-danger" onclick="adminLogout()">Logout</button>
+    </div>
+
+    <div class="admin-tabs">
+      <button class="admin-tab active" onclick="switchAdminTab('addResult', this)">+ Result Add</button>
+      <button class="admin-tab" onclick="switchAdminTab('manageResults', this)">📋 Manage Results</button>
+      <button class="admin-tab" onclick="switchAdminTab('sectorPoints', this)">📊 Sector Points</button>
+      <button class="admin-tab" onclick="switchAdminTab('scheduleAdmin', this)">📅 Schedule</button>
+    </div>
+
+    <!-- Add Result -->
+    <div class="admin-content active" id="addResult">
+      <div class="form-card">
+        <div class="form-title">🏆 പുതിയ Result Add ചെയ്യുക</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Category</label>
+            <select class="form-input" id="rCat">
+              <option value="LP">LP</option>
+              <option value="UP">UP</option>
+              <option value="HS">HS</option>
+              <option value="HSS">HSS</option>
+              <option value="JR">Junior</option>
+              <option value="SR">Senior</option>
+              <option value="Campus">Campus</option>
+              <option value="General">General</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Event / Programme</label>
+            <input class="form-input" id="rEvent" placeholder="eg: മദ്ഹ് ഗാനം">
+          </div>
+          <div class="form-group">
+            <label>1st Place Winner</label>
+            <input class="form-input" id="rWinner1" placeholder="Participant name">
+          </div>
+          <div class="form-group">
+            <label>Sector (1st)</label>
+            <select class="form-input" id="rSector1">
+              <option value="">Select Sector</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>2nd Place Winner</label>
+            <input class="form-input" id="rWinner2" placeholder="Participant name (optional)">
+          </div>
+          <div class="form-group">
+            <label>Sector (2nd)</label>
+            <select class="form-input" id="rSector2">
+              <option value="">Select Sector</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>3rd Place Winner</label>
+            <input class="form-input" id="rWinner3" placeholder="Participant name (optional)">
+          </div>
+          <div class="form-group">
+            <label>Sector (3rd)</label>
+            <select class="form-input" id="rSector3">
+              <option value="">Select Sector</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Grade (1st)</label>
+            <select class="form-input" id="rGrade">
+              <option value="A+">A+</option>
+              <option value="A">A</option>
+              <option value="B">B</option>
+              <option value="C">C</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn-save" onclick="addResult()">✓ Result Save ചെയ്യുക</button>
+      </div>
+    </div>
+
+    <!-- Manage Results -->
+    <div class="admin-content" id="manageResults">
+      <div class="form-card">
+        <div class="form-title">📋 Saved Results</div>
+        <div class="results-list" id="adminResultsList"></div>
+      </div>
+    </div>
+
+    <!-- Sector Points -->
+    <div class="admin-content" id="sectorPoints">
+      <div class="form-card">
+        <div class="form-title">📊 Sector-wise Points Summary</div>
+        <div id="sectorPointsTable"></div>
+      </div>
+    </div>
+
+    <!-- Schedule Admin -->
+    <div class="admin-content" id="scheduleAdmin">
+      <div class="form-card">
+        <div class="form-title">📅 Schedule Add</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Date</label>
+            <input class="form-input" id="schDate" type="date">
+          </div>
+          <div class="form-group">
+            <label>Venue</label>
+            <input class="form-input" id="schVenue" placeholder="Venue name">
+          </div>
+          <div class="form-group">
+            <label>Time</label>
+            <input class="form-input" id="schTime" placeholder="09:00 AM">
+          </div>
+          <div class="form-group">
+            <label>Event</label>
+            <input class="form-input" id="schEvent" placeholder="Event name">
+          </div>
+          <div class="form-group">
+            <label>Category</label>
+            <select class="form-input" id="schCat">
+              <option value="LP">LP</option>
+              <option value="UP">UP</option>
+              <option value="HS">HS</option>
+              <option value="HSS">HSS</option>
+              <option value="JR">Junior</option>
+              <option value="SR">Senior</option>
+              <option value="Campus">Campus</option>
+              <option value="General">General</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn-save" onclick="addSchedule()">✓ Schedule Save</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">🍂 സാഹിത്യോത്സവ് '26</div>
+  <div class="footer-text">
+    Tanur Division · SSF Kerala<br>
+    Students Centre, Calicut · www.ssfkerala.org
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════
+//  DATA
+// ═══════════════════════════════════════════
+const SECTORS = [
+  { name: "K Puram",      units: 9,  emoji: "🌿" },
+  { name: "Kunnumpuram",  units: 8,  emoji: "🌾" },
+  { name: "Niramaruthur", units: 10, emoji: "🌺" },
+  { name: "Ozhur",        units: 9,  emoji: "🍀" },
+  { name: "Tanalur",      units: 10, emoji: "🌸" },
+  { name: "Tanur",        units: 10, emoji: "🌻" },
+  { name: "Tanur Town",   units: 11, emoji: "🏙️" },
+];
+
+const CATEGORIES = ['LP','UP','HS','HSS','JR','SR','Campus','General'];
+
+const PIN = "12345"; // Admin PIN — production-ൽ change ചെയ്യുക
+
+// Points system
+const PLACE_POINTS = { 1: 5, 2: 3, 3: 1 };
+
+// Load from localStorage
+let results = JSON.parse(localStorage.getItem('sfs26_results') || '[]');
+let schedules = JSON.parse(localStorage.getItem('sfs26_schedule') || '[]');
+
+// ═══════════════════════════════════════════
+//  NAV
+// ═══════════════════════════════════════════
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const link = document.querySelector(`.nav-links a[onclick="showSection('${id}')"]`);
+  if (link) link.classList.add('active');
+  document.getElementById('navLinks').classList.remove('open');
+  window.scrollTo(0, 0);
+
+  if (id === 'scoreboard') renderScoreboard('overall');
+  if (id === 'results') renderResults();
+  if (id === 'teams') renderTeams();
+  if (id === 'schedule') renderSchedule();
+  if (id === 'admin' && document.getElementById('adminPanel').style.display === 'block') renderAdminResults();
+}
+
+function toggleNav() {
+  document.getElementById('navLinks').classList.toggle('open');
+}
+
+// ═══════════════════════════════════════════
+//  HOME
+// ═══════════════════════════════════════════
+function renderHomeGrid() {
+  const grid = document.getElementById('homeSectorsGrid');
+  const scores = computeScores('overall');
+  grid.innerHTML = SECTORS.map(s => {
+    const pts = scores[s.name] || {total:0};
+    return `
+      <div class="sector-card" onclick="showSection('scoreboard')">
+        <div class="sector-name">${s.emoji} ${s.name}</div>
+        <div class="sector-units">📍 ${s.units} Units</div>
+        <div class="sector-points">${pts.total} <span style="font-size:0.7rem;color:var(--text-dim)">pts</span></div>
+      </div>`;
+  }).join('');
+  document.getElementById('totalResults').textContent = results.length;
+}
+
+// ═══════════════════════════════════════════
+//  SCORES
+// ═══════════════════════════════════════════
+function computeScores(category) {
+  const scores = {};
+  SECTORS.forEach(s => {
+    scores[s.name] = { total: 0, first: 0, second: 0, third: 0, byCategory: {} };
+    CATEGORIES.forEach(c => scores[s.name].byCategory[c] = 0);
+  });
+
+  results.forEach(r => {
+    if (category !== 'overall' && r.category !== category) return;
+
+    [[r.sector1, 1, r.winner1], [r.sector2, 2, r.winner2], [r.sector3, 3, r.winner3]].forEach(([sec, place, winner]) => {
+      if (!sec || !winner || !scores[sec]) return;
+      const pts = PLACE_POINTS[place] || 0;
+      scores[sec].total += pts;
+      scores[sec].byCategory[r.category] = (scores[sec].byCategory[r.category] || 0) + pts;
+      if (place === 1) scores[sec].first++;
+      if (place === 2) scores[sec].second++;
+      if (place === 3) scores[sec].third++;
+    });
+  });
+
+  return scores;
+}
+
+function renderScoreboard(category) {
+  const scores = computeScores(category);
+  const ranked = SECTORS.map(s => ({ ...s, ...scores[s.name] }))
+    .sort((a, b) => b.total - a.total || b.first - a.first);
+
+  const body = document.getElementById('scoreboardBody');
+  body.innerHTML = ranked.map((s, i) => {
+    const rankClass = i === 0 ? 'rank-1' : i === 1 ? 'rank-2' : i === 2 ? 'rank-3' : '';
+    const medals = ['🥇','🥈','🥉'];
+    const rankDisp = i < 3 ? medals[i] : `#${i+1}`;
+    return `
+      <div class="table-row ${rankClass}">
+        <div class="rank-badge">${rankDisp}</div>
+        <div>
+          <div class="team-name">${s.name}</div>
+          <div class="team-units">${s.units} Units</div>
+        </div>
+        <div class="pts-small hide-mobile">${s.first}</div>
+        <div class="pts-small hide-mobile">${s.second}</div>
+        <div class="pts-small hide-mobile">${s.third}</div>
+        <div class="pts">${s.total}</div>
+      </div>`;
+  }).join('');
+}
+
+function filterScores(cat, btn) {
+  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  renderScoreboard(cat);
+}
+
+// ═══════════════════════════════════════════
+//  RESULTS
+// ═══════════════════════════════════════════
+function renderResults() {
+  populateSectorFilter();
+  filterResults();
+}
+
+function populateSectorFilter() {
+  const sel = document.getElementById('filterSector');
+  if (sel.options.length <= 1) {
+    SECTORS.forEach(s => {
+      const o = document.createElement('option');
+      o.value = s.name; o.textContent = s.name;
+      sel.appendChild(o);
+    });
+  }
+}
+
+function filterResults() {
+  const cat = document.getElementById('filterCategory').value;
+  const sec = document.getElementById('filterSector').value;
+  const grade = document.getElementById('filterGrade').value;
+  const search = document.getElementById('searchResults').value.toLowerCase();
+
+  const filtered = results.filter(r => {
+    if (cat && r.category !== cat) return false;
+    if (sec && r.sector1 !== sec && r.sector2 !== sec && r.sector3 !== sec) return false;
+    if (grade && r.grade !== grade) return false;
+    if (search && !r.event.toLowerCase().includes(search) &&
+        !r.winner1.toLowerCase().includes(search)) return false;
+    return true;
+  });
+
+  const grid = document.getElementById('resultsGrid');
+  if (!filtered.length) {
+    grid.innerHTML = '<div class="no-results">🔍 ഫിൽട്ടർ match ആയ results ഇല്ല</div>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map(r => `
+    <div class="result-card">
+      <div>
+        <div class="result-event">${r.category} · ${r.event}</div>
+        <div class="result-winner">🥇 ${r.winner1} <span style="color:var(--text-dim);font-weight:400">· ${r.sector1}</span></div>
+        ${r.winner2 ? `<div class="result-unit">🥈 ${r.winner2} · ${r.sector2}</div>` : ''}
+        ${r.winner3 ? `<div class="result-unit">🥉 ${r.winner3} · ${r.sector3}</div>` : ''}
+      </div>
+      <div class="result-grade grade-${r.grade === 'A+' ? 'aplus' : r.grade.toLowerCase()}">${r.grade}</div>
+    </div>`).join('');
+}
+
+// ═══════════════════════════════════════════
+//  TEAMS
+// ═══════════════════════════════════════════
+function renderTeams() {
+  const scores = computeScores('overall');
+  const ranked = SECTORS.map(s => ({ ...s, ...scores[s.name] }))
+    .sort((a, b) => b.total - a.total);
+
+  document.getElementById('teamsGrid').innerHTML = ranked.map((s, i) => `
+    <div class="team-card">
+      <div class="team-header">
+        <div class="team-icon">${s.name.charAt(0)}</div>
+        <div class="team-rank">#${i+1}</div>
+      </div>
+      <div class="team-card-name">${s.emoji || '🍂'} ${s.name}</div>
+      <div class="team-meta">📍 ${s.units} Units</div>
+      <div class="team-stats-row">
+        <div class="mini-stat">
+          <span class="mini-stat-num">${s.first}</span>
+          <span class="mini-stat-label">1st</span>
+        </div>
+        <div class="mini-stat">
+          <span class="mini-stat-num">${s.second}</span>
+          <span class="mini-stat-label">2nd</span>
+        </div>
+        <div class="mini-stat">
+          <span class="mini-stat-num">${s.total}</span>
+          <span class="mini-stat-label">Pts</span>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+// ═══════════════════════════════════════════
+//  SCHEDULE
+// ═══════════════════════════════════════════
+function renderSchedule() {
+  const grid = document.getElementById('scheduleGrid');
+  if (!schedules.length) {
+    grid.innerHTML = '<div class="no-results">Schedule publish ആകുമ്പോൾ ഇവിടെ കാണാം</div>';
+    return;
+  }
+
+  const grouped = {};
+  schedules.forEach(s => {
+    if (!grouped[s.date]) grouped[s.date] = { venue: s.venue, items: [] };
+    grouped[s.date].items.push(s);
+  });
+
+  grid.innerHTML = Object.entries(grouped).map(([date, data]) => `
+    <div class="schedule-card">
+      <div class="schedule-header">
+        <div class="schedule-date">📅 ${date}</div>
+        <div class="schedule-venue">📍 ${data.venue}</div>
+      </div>
+      <div class="schedule-items">
+        ${data.items.map(item => `
+          <div class="schedule-item">
+            <div class="sch-time">${item.time}</div>
+            <div class="sch-event">${item.event}</div>
+            <div class="sch-cat">${item.category}</div>
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+}
+
+// ═══════════════════════════════════════════
+//  ADMIN
+// ═══════════════════════════════════════════
+function checkPin() {
+  const pin = document.getElementById('pinInput').value;
+  const err = document.getElementById('pinError');
+  if (pin === PIN) {
+    document.getElementById('adminLock').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'block';
+    populateSectorSelects();
+    renderAdminResults();
+    renderSectorPoints();
+  } else {
+    err.style.display = 'block';
+    document.getElementById('pinInput').value = '';
+    setTimeout(() => err.style.display = 'none', 3000);
+  }
+}
+
+function adminLogout() {
+  document.getElementById('adminLock').style.display = 'block';
+  document.getElementById('adminPanel').style.display = 'none';
+  document.getElementById('pinInput').value = '';
+}
+
+function populateSectorSelects() {
+  ['rSector1', 'rSector2', 'rSector3'].forEach(id => {
+    const sel = document.getElementById(id);
+    sel.innerHTML = '<option value="">Select Sector</option>';
+    SECTORS.forEach(s => {
+      const o = document.createElement('option');
+      o.value = s.name; o.textContent = s.name;
+      sel.appendChild(o);
+    });
+  });
+}
+
+function addResult() {
+  const event = document.getElementById('rEvent').value.trim();
+  const category = document.getElementById('rCat').value;
+  const winner1 = document.getElementById('rWinner1').value.trim();
+  const sector1 = document.getElementById('rSector1').value;
+  const winner2 = document.getElementById('rWinner2').value.trim();
+  const sector2 = document.getElementById('rSector2').value;
+  const winner3 = document.getElementById('rWinner3').value.trim();
+  const sector3 = document.getElementById('rSector3').value;
+  const grade = document.getElementById('rGrade').value;
+
+  if (!event || !winner1 || !sector1) {
+    showToast('⚠️ Event, Winner, Sector നൽകണം');
+    return;
+  }
+
+  const result = {
+    id: Date.now(),
+    category, event,
+    winner1, sector1,
+    winner2: winner2 || '', sector2: sector2 || '',
+    winner3: winner3 || '', sector3: sector3 || '',
+    grade,
+    timestamp: new Date().toLocaleString('ml-IN')
+  };
+
+  results.push(result);
+  saveResults();
+  renderAdminResults();
+  renderSectorPoints();
+  renderHomeGrid();
+
+  // Clear form
+  ['rEvent','rWinner1','rWinner2','rWinner3'].forEach(id => document.getElementById(id).value = '');
+  ['rSector1','rSector2','rSector3'].forEach(id => document.getElementById(id).value = '');
+
+  showToast('✅ Result saved successfully!');
+}
+
+function deleteResult(id) {
+  if (!confirm('ഈ result delete ചെയ്യണോ?')) return;
+  results = results.filter(r => r.id !== id);
+  saveResults();
+  renderAdminResults();
+  renderSectorPoints();
+  renderHomeGrid();
+  showToast('🗑️ Result deleted');
+}
+
+function saveResults() {
+  localStorage.setItem('sfs26_results', JSON.stringify(results));
+}
+
+function renderAdminResults() {
+  const list = document.getElementById('adminResultsList');
+  if (!results.length) {
+    list.innerHTML = '<div class="no-results">No results yet</div>';
+    return;
+  }
+  list.innerHTML = [...results].reverse().map(r => `
+    <div class="result-item">
+      <div class="result-item-info">
+        <div class="result-item-event">${r.category} · ${r.grade}</div>
+        <div class="result-item-winner">${r.event} — ${r.winner1} (${r.sector1})</div>
+      </div>
+      <button class="btn-danger" onclick="deleteResult(${r.id})">Delete</button>
+    </div>`).join('');
+}
+
+function renderSectorPoints() {
+  const scores = computeScores('overall');
+  const ranked = SECTORS.map(s => ({ ...s, ...scores[s.name] }))
+    .sort((a, b) => b.total - a.total);
+
+  document.getElementById('sectorPointsTable').innerHTML = `
+    <div style="display:grid;gap:0.5rem">
+      ${ranked.map((s, i) => `
+        <div style="display:flex;align-items:center;justify-content:space-between;
+             padding:0.75rem 1rem;background:rgba(201,150,26,0.06);
+             border-radius:8px;border:1px solid rgba(201,150,26,0.15)">
+          <div>
+            <span style="font-size:0.85rem;font-weight:600;color:var(--text)">#${i+1} ${s.name}</span>
+            <span style="font-size:0.72rem;color:var(--text-dim);margin-left:0.5rem">${s.units} units</span>
+          </div>
+          <div style="display:flex;gap:1rem;align-items:center">
+            <span style="font-size:0.75rem;color:var(--text-dim)">🥇${s.first} 🥈${s.second} 🥉${s.third}</span>
+            <span style="font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--gold-light)">${s.total} pts</span>
+          </div>
+        </div>`).join('')}
+    </div>`;
+}
+
+function addSchedule() {
+  const date = document.getElementById('schDate').value;
+  const venue = document.getElementById('schVenue').value.trim();
+  const time = document.getElementById('schTime').value.trim();
+  const event = document.getElementById('schEvent').value.trim();
+  const category = document.getElementById('schCat').value;
+
+  if (!date || !event || !time) {
+    showToast('⚠️ Date, Time, Event നൽകണം');
+    return;
+  }
+
+  schedules.push({ id: Date.now(), date, venue, time, event, category });
+  localStorage.setItem('sfs26_schedule', JSON.stringify(schedules));
+  ['schDate','schVenue','schTime','schEvent'].forEach(id => document.getElementById(id).value = '');
+  showToast('✅ Schedule added!');
+}
+
+function switchAdminTab(tabId, btn) {
+  document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.admin-content').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(tabId).classList.add('active');
+  if (tabId === 'manageResults') renderAdminResults();
+  if (tabId === 'sectorPoints') renderSectorPoints();
+}
+
+// ═══════════════════════════════════════════
+//  UTILS
+// ═══════════════════════════════════════════
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ═══════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════
+renderHomeGrid();
+</script>
+</body>
+</html>
